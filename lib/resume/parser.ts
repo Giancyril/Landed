@@ -1,6 +1,4 @@
 import mammoth from "mammoth";
-// @ts-ignore
-import pdfParse from "pdf-parse/lib/pdf-parse.js";
 
 export interface ExtractedResumeText {
   text: string;
@@ -9,7 +7,8 @@ export interface ExtractedResumeText {
 }
 
 /**
- * Extracts raw text from PDF or DOCX file buffer server-side
+ * Extracts raw text from PDF or DOCX file buffer server-side.
+ * Uses dynamic require() for pdf-parse to avoid Turbopack ESM resolution issues.
  */
 export async function parseResumeBuffer(
   buffer: Buffer,
@@ -21,19 +20,29 @@ export async function parseResumeBuffer(
   const isPdf =
     mimeType === "application/pdf" || fileName.toLowerCase().endsWith(".pdf");
   const isDocx =
-    mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    mimeType ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
     mimeType === "application/msword" ||
     fileName.toLowerCase().endsWith(".docx") ||
     fileName.toLowerCase().endsWith(".doc");
 
   if (isPdf) {
     try {
-      const pdfParser = typeof pdfParse === "function" ? pdfParse : pdfParse.default || pdfParse;
-      const parsed = await pdfParser(buffer);
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pdfParseModule = require("pdf-parse");
+      const pdfParse =
+        typeof pdfParseModule === "function"
+          ? pdfParseModule
+          : pdfParseModule.default ?? pdfParseModule;
+
+      const parsed = await pdfParse(buffer);
       extractedText = parsed.text;
     } catch (err: any) {
       console.error("[pdf-parse] Error:", err);
-      extractedText = buffer.toString("utf-8").replace(/[^\x20-\x7E\n\r\t]/g, " ");
+      // Basic ASCII fallback for edge cases
+      extractedText = buffer
+        .toString("utf-8")
+        .replace(/[^\x20-\x7E\n\r\t]/g, " ");
     }
   } else if (isDocx) {
     try {
@@ -49,7 +58,7 @@ export async function parseResumeBuffer(
     );
   }
 
-  // Clean extra whitespace
+  // Clean up extra whitespace and carriage returns
   const cleanedText = extractedText
     .replace(/\r\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
