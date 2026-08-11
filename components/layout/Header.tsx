@@ -1,0 +1,58 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { User, Sparkles, ShieldCheck } from "lucide-react";
+
+const BREADCRUMBS: Record<string, string> = {
+  "/jobs": "Job Search & Openings",
+  "/resumes": "Base Resume Manager",
+  "/tailor": "AI Resume Tailoring Workspace",
+  "/cover-letter": "AI Cover Letter Generator",
+  "/tracker": "Kanban Application Tracker",
+};
+
+interface HeaderProps {
+  userEmail?: string;
+}
+
+export default function Header({ userEmail }: HeaderProps) {
+  const pathname = usePathname();
+  const currentTitle = BREADCRUMBS[pathname] ?? "Dashboard";
+  const userInitial = userEmail ? userEmail.charAt(0).toUpperCase() : "U";
+
+  return (
+    <header
+      className="h-14 px-8 flex items-center justify-between shrink-0"
+      style={{
+        background: "var(--surface-card)",
+        borderBottom: "1px solid var(--surface-border)",
+      }}
+    >
+      {/* Current Page Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono">
+        <span className="text-[var(--content-muted)]">Landed</span>
+        <span className="text-[var(--content-muted)]">/</span>
+        <span className="font-semibold text-[var(--content-primary)]">{currentTitle}</span>
+      </div>
+
+      {/* User Badge & Security Tag */}
+      <div className="flex items-center gap-4">
+        <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-[var(--accent-primary)] bg-[var(--accent-subtle)] px-2.5 py-1 rounded-full border border-emerald-500/20">
+          <ShieldCheck size={13} />
+          <span>RLS Protected</span>
+        </div>
+
+        {userEmail && (
+          <div className="flex items-center gap-2 pl-3 border-l border-[var(--surface-border)]">
+            <div className="w-7 h-7 rounded-full bg-[var(--surface-elevated)] border border-[var(--surface-border)] flex items-center justify-center font-mono font-bold text-xs text-[var(--accent-primary)]">
+              {userInitial}
+            </div>
+            <span className="text-xs font-mono text-[var(--content-secondary)] hidden md:inline truncate max-w-[180px]">
+              {userEmail}
+            </span>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}

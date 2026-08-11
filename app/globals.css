@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
-/* ── Design System Tokens ────────────────────────────────────────────────── */
+/* ── Executive Design Tokens ─────────────────────────────────────────────── */
 :root {
   /* Surfaces */
-  --surface-page:    #0f172a;   /* deepest navy — page background */
-  --surface-card:    #1e293b;   /* slate card backgrounds */
-  --surface-elevated:#263347;   /* slightly lighter card hover/elevated */
-  --surface-border:  #334155;   /* card borders */
-  --surface-input:   #1a2744;   /* input field background */
+  --surface-page:     #0b1329;   /* deep rich executive navy */
+  --surface-card:     #162036;   /* slate card backgrounds */
+  --surface-elevated: #1e2d4a;   /* elevated card hover state */
+  --surface-border:   #2a3b5c;   /* crisp subtle border */
+  --surface-input:    #121d33;   /* input field background */
 
   /* Content */
-  --content-primary:   #f1f5f9;  /* headings / primary text */
-  --content-secondary: #94a3b8;  /* body / secondary text */
-  --content-muted:     #475569;  /* placeholders / hints */
+  --content-primary:   #f8fafc;  /* crisp white headings */
+  --content-secondary: #94a3b8;  /* soft slate body text */
+  --content-muted:     #475569;  /* subtle muted captions */
 
-  /* Accent */
-  --accent-primary: #10b981;   /* emerald — primary CTA */
-  --accent-hover:   #059669;   /* darker emerald on hover */
-  --accent-subtle:  rgba(16, 185, 129, 0.12); /* light accent bg for badges */
+  /* Accents */
+  --accent-primary: #10b981;   /* emerald green */
+  --accent-hover:   #059669;   /* darker emerald */
+  --accent-subtle:  rgba(16, 185, 129, 0.12);
+  --accent-glow:    0 0 20px rgba(16, 185, 129, 0.25);
 
-  /* Status colors */
+  /* Status Colors */
   --status-saved:        #64748b;
   --status-applied:      #6366f1;
   --status-interviewing: #f59e0b;
@@ -27,13 +28,13 @@
   --status-rejected:     #f43f5e;
   --status-withdrawn:    #71717a;
 
-  /* Utility */
+  /* Geometry & Shadows */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
 
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
-  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 @theme inline {
@@ -43,7 +44,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* ── Base Resets ─────────────────────────────────────────────────────────── */
+/* ── Base Reset & Focus Styles ────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -60,12 +61,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Layout Utilities ────────────────────────────────────────────────────── */
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--content-muted);
+}
+
+/* ── UI Utilities ─────────────────────────────────────────────────────────── */
 .card {
   background: var(--surface-card);
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-elevated);
 }
 
 .input-field {
@@ -75,9 +97,9 @@ body {
   color: var(--content-primary);
   width: 100%;
   padding: 10px 14px;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   outline: none;
-  transition: border-color 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .input-field::placeholder {
@@ -86,23 +108,27 @@ body {
 
 .input-field:focus {
   border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .btn-primary {
   background: var(--accent-primary);
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
   transition: background 200ms ease, transform 150ms ease, box-shadow 200ms ease;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary:hover:not(:disabled) {
   background: var(--accent-hover);
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  box-shadow: var(--accent-glow);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -118,11 +144,15 @@ body {
   background: transparent;
   border: 1px solid var(--surface-border);
   color: var(--content-secondary);
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-ghost:hover {
@@ -133,11 +163,11 @@ body {
 
 /* ── Animations ──────────────────────────────────────────────────────────── */
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in {
-  animation: fade-in 280ms ease forwards;
+  animation: fade-in 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes shimmer {
@@ -152,7 +182,7 @@ body {
     var(--surface-card)    75%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 1.6s infinite;
 }
 
 @keyframes spin {
@@ -170,14 +200,14 @@ body {
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.badge-saved        { background: rgba(100,116,139,0.15); color: var(--status-saved);        border: 1px solid rgba(100,116,139,0.25); }
-.badge-applied      { background: rgba(99,102,241,0.15);  color: var(--status-applied);      border: 1px solid rgba(99,102,241,0.25); }
-.badge-interviewing { background: rgba(245,158,11,0.15);  color: var(--status-interviewing); border: 1px solid rgba(245,158,11,0.25); }
-.badge-offer        { background: rgba(16,185,129,0.15);  color: var(--status-offer);        border: 1px solid rgba(16,185,129,0.25); }
-.badge-rejected     { background: rgba(244,63,94,0.15);   color: var(--status-rejected);     border: 1px solid rgba(244,63,94,0.25); }
-.badge-withdrawn    { background: rgba(113,113,122,0.15); color: var(--status-withdrawn);    border: 1px solid rgba(113,113,122,0.25); }
+.badge-saved        { background: rgba(100,116,139,0.18); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+.badge-applied      { background: rgba(99,102,241,0.18);  color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+.badge-interviewing { background: rgba(245,158,11,0.18);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.badge-offer        { background: rgba(16,185,129,0.18);  color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.badge-rejected     { background: rgba(244,63,94,0.18);   color: #fb7185; border: 1px solid rgba(244,63,94,0.3); }
+.badge-withdrawn    { background: rgba(113,113,122,0.18); color: #a1a1aa; border: 1px solid rgba(113,113,122,0.3); }
