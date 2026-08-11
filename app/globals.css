@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
+/* ── Design System Tokens ────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --surface-page:    #0f172a;   /* deepest navy — page background */
+  --surface-card:    #1e293b;   /* slate card backgrounds */
+  --surface-elevated:#263347;   /* slightly lighter card hover/elevated */
+  --surface-border:  #334155;   /* card borders */
+  --surface-input:   #1a2744;   /* input field background */
+
+  /* Content */
+  --content-primary:   #f1f5f9;  /* headings / primary text */
+  --content-secondary: #94a3b8;  /* body / secondary text */
+  --content-muted:     #475569;  /* placeholders / hints */
+
+  /* Accent */
+  --accent-primary: #10b981;   /* emerald — primary CTA */
+  --accent-hover:   #059669;   /* darker emerald on hover */
+  --accent-subtle:  rgba(16, 185, 129, 0.12); /* light accent bg for badges */
+
+  /* Status colors */
+  --status-saved:        #64748b;
+  --status-applied:      #6366f1;
+  --status-interviewing: #f59e0b;
+  --status-offer:        #10b981;
+  --status-rejected:     #f43f5e;
+  --status-withdrawn:    #71717a;
+
+  /* Utility */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--surface-page);
+  --color-foreground: var(--content-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base Resets ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--surface-page);
+  color: var(--content-primary);
+  font-family: var(--font-geist-sans, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ── Layout Utilities ────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.input-field {
+  background: var(--surface-input);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  color: var(--content-primary);
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 200ms ease;
+}
+
+.input-field::placeholder {
+  color: var(--content-muted);
+}
+
+.input-field:focus {
+  border-color: var(--accent-primary);
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+  font-size: 0.9rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--surface-border);
+  color: var(--content-secondary);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+.btn-ghost:hover {
+  background: var(--surface-elevated);
+  color: var(--content-primary);
+  border-color: var(--accent-primary);
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 280ms ease forwards;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-card)    25%,
+    var(--surface-elevated) 50%,
+    var(--surface-card)    75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Status Badges ───────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-saved        { background: rgba(100,116,139,0.15); color: var(--status-saved);        border: 1px solid rgba(100,116,139,0.25); }
+.badge-applied      { background: rgba(99,102,241,0.15);  color: var(--status-applied);      border: 1px solid rgba(99,102,241,0.25); }
+.badge-interviewing { background: rgba(245,158,11,0.15);  color: var(--status-interviewing); border: 1px solid rgba(245,158,11,0.25); }
+.badge-offer        { background: rgba(16,185,129,0.15);  color: var(--status-offer);        border: 1px solid rgba(16,185,129,0.25); }
+.badge-rejected     { background: rgba(244,63,94,0.15);   color: var(--status-rejected);     border: 1px solid rgba(244,63,94,0.25); }
+.badge-withdrawn    { background: rgba(113,113,122,0.15); color: var(--status-withdrawn);    border: 1px solid rgba(113,113,122,0.25); }
