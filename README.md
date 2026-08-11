@@ -69,11 +69,7 @@ npm install
 
 ### 2. Configure Environment Variables
 
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local` with your credentials:
+Edit `.env` in the project root with your credentials:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
