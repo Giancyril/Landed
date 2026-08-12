@@ -1,6 +1,6 @@
 "use client";
 
-import { DollarSign, TrendingUp, Briefcase } from "lucide-react";
+import { DollarSign, TrendingUp, Briefcase, Gift, Laptop } from "lucide-react";
 import { formatSalary } from "@/lib/compensation/calculator";
 
 interface CompensationInputFormProps {
@@ -48,50 +48,57 @@ export default function CompensationInputForm({
       {/* Role Info */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-            Job Title
-          </label>
-          <div className="relative">
-            <Briefcase size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
-            <input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} placeholder="e.g. Senior Product Manager" required className="input-field pl-10 text-sm" />
+          <label className="form-label">Job Title</label>
+          <div className="input-icon-wrap">
+            <Briefcase size={15} className="input-icon" />
+            <input
+              type="text"
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+              placeholder="Senior Product Manager"
+              required
+              className="input-field text-sm"
+            />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-            Company
-          </label>
-          <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="e.g. Shopify" required className="input-field text-sm" />
+          <label className="form-label">Company Name</label>
+          <input
+            type="text"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            placeholder="Shopify"
+            required
+            className="input-field text-sm"
+          />
         </div>
       </div>
 
       {/* Compensation Fields */}
-      <div className="space-y-1">
-        <div className="text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-3">
-          Offer Components (Annual, USD)
+      <div>
+        <div className="section-title">
+          Compensation Breakdown
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Base Salary ★", value: baseSalary, setter: setBaseSalary, required: true },
-            { label: "Annual Bonus", value: bonus, setter: setBonus, required: false },
-            { label: "Equity Value (Annualised)", value: equityValue, setter: setEquityValue, required: false },
-            { label: "Signing Bonus", value: signingBonus, setter: setSigningBonus, required: false },
-            { label: "Remote / Equipment Allowance", value: remoteAllowance, setter: setRemoteAllowance, required: false },
-          ].map(({ label, value, setter, required }) => (
+            { label: "Base Salary ($/yr)", val: baseSalary, set: setBaseSalary, icon: DollarSign },
+            { label: "Annual Bonus ($/yr)", val: bonus, set: setBonus, icon: TrendingUp },
+            { label: "Equity Grant ($/yr)", val: equityValue, set: setEquityValue, icon: Gift },
+            { label: "Signing Bonus ($)", val: signingBonus, set: setSigningBonus, icon: Laptop },
+          ].map(({ label, val, set, icon: Icon }) => (
             <div key={label}>
-              <label className="block text-[11px] text-[var(--content-secondary)] mb-1">{label}</label>
-              <div className="relative">
-                <DollarSign size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
+              <label className="form-label">{label}</label>
+              <div className="input-icon-wrap">
+                <Icon size={14} className="input-icon" />
                 <input
                   type="number"
-                  min="0"
-                  step="1000"
-                  value={value}
-                  onChange={(e) => setter(e.target.value)}
+                  min={0}
+                  step={1000}
+                  value={val || ""}
+                  onChange={(e) => set(e.target.value)}
                   placeholder="0"
-                  required={required}
-                  className="input-field pl-8 text-sm font-mono"
+                  className="input-field text-sm"
                 />
               </div>
             </div>
@@ -112,7 +119,6 @@ export default function CompensationInputForm({
         </div>
       )}
 
-      {/* Additional Candidate Notes */}
       <div>
         <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
           Negotiation Notes (Optional)

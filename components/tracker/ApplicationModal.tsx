@@ -74,9 +74,7 @@ export default function ApplicationModal({
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-mono text-[var(--content-muted)] uppercase mb-1">
-                Job Title *
-              </label>
+              <label className="form-label font-medium">Job Title *</label>
               <input
                 type="text"
                 value={jobTitle}
@@ -88,9 +86,7 @@ export default function ApplicationModal({
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-[var(--content-muted)] uppercase mb-1">
-                Company *
-              </label>
+              <label className="form-label font-medium">Company *</label>
               <input
                 type="text"
                 value={company}
@@ -104,9 +100,7 @@ export default function ApplicationModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-mono text-[var(--content-muted)] uppercase mb-1">
-                Location
-              </label>
+              <label className="form-label font-medium">Location</label>
               <input
                 type="text"
                 value={location}
@@ -117,13 +111,11 @@ export default function ApplicationModal({
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-[var(--content-muted)] uppercase mb-1">
-                Status Stage
-              </label>
+              <label className="form-label font-medium">Status Stage</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
-                className="input-field text-xs cursor-pointer"
+                className="select-field text-xs"
               >
                 <option value="saved">Saved</option>
                 <option value="applied">Applied</option>
@@ -136,15 +128,13 @@ export default function ApplicationModal({
           </div>
 
           <div>
-            <label className="block text-[11px] font-mono text-[var(--content-muted)] uppercase mb-1">
-              Personal Application Notes
-            </label>
+            <label className="form-label font-medium">Personal Application Notes</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
-              className="input-field text-xs font-mono"
-              placeholder="e.g. Recruiter screen went great. Tech screen scheduled for Friday 2 PM."
+              className="textarea-field text-xs"
+              placeholder="Recruiter screen notes, key contacts, or interview scheduling details..."
             />
           </div>
 

@@ -23,15 +23,15 @@ export default function JobCard({ job, onSelect, onTrack, isTracking }: JobCardP
       : null;
 
   return (
-    <div className="card p-5 transition-all duration-200 hover:border-[var(--accent-primary)] hover:shadow-lg flex flex-col justify-between gap-4 group">
+    <div className="card card-lift p-5 flex flex-col justify-between gap-4 group">
       {/* Top Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3.5">
           {/* Company Logo Avatar */}
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 mt-0.5"
+            className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 mt-0.5 shadow-sm"
             style={{
-              background: "var(--surface-elevated)",
+              background: "linear-gradient(135deg, var(--surface-elevated), var(--surface-card))",
               border: "1px solid var(--surface-border)",
               color: "var(--accent-primary)",
             }}

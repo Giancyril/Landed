@@ -23,35 +23,31 @@ export default function JobFilters({ onSearch, loading }: JobFiltersProps) {
     <form onSubmit={handleSubmit} className="card p-5 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
         {/* Search Keyword Input */}
-        <div className="md:col-span-5 relative">
-          <Search
-            size={16}
-            className="absolute left-3.5 top-1/2 -translate-y-1/2"
-            style={{ color: "var(--content-muted)" }}
-          />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Job title, keywords, or company (e.g. Frontend, React, Vercel)"
-            className="input-field pl-10 text-sm"
-          />
+        <div className="md:col-span-5">
+          <div className="input-icon-wrap">
+            <Search size={15} className="input-icon" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Job title, keywords, or company..."
+              className="input-field text-sm"
+            />
+          </div>
         </div>
 
         {/* Location Input */}
-        <div className="md:col-span-4 relative">
-          <MapPin
-            size={16}
-            className="absolute left-3.5 top-1/2 -translate-y-1/2"
-            style={{ color: "var(--content-muted)" }}
-          />
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="City, state, or postal code"
-            className="input-field pl-10 text-sm"
-          />
+        <div className="md:col-span-4">
+          <div className="input-icon-wrap">
+            <MapPin size={15} className="input-icon" />
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="City, state, or Remote..."
+              className="input-field text-sm"
+            />
+          </div>
         </div>
 
         {/* Country Selector */}
@@ -59,13 +55,13 @@ export default function JobFilters({ onSearch, loading }: JobFiltersProps) {
           <select
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            className="input-field text-sm cursor-pointer"
+            className="select-field text-sm"
           >
-            <option value="us">🇺🇸 United States</option>
-            <option value="gb">🇬🇧 United Kingdom</option>
-            <option value="ca">🇨🇦 Canada</option>
-            <option value="au">🇦🇺 Australia</option>
-            <option value="de">🇩🇪 Germany</option>
+            <option value="us">United States (US)</option>
+            <option value="gb">United Kingdom (UK)</option>
+            <option value="ca">Canada (CA)</option>
+            <option value="au">Australia (AU)</option>
+            <option value="de">Germany (DE)</option>
           </select>
         </div>
       </div>

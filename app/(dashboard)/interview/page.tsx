@@ -98,7 +98,7 @@ function InterviewPageContent() {
   const activeFeedback = feedbacks[selectedIndex];
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-6 animate-fade-in">
+    <div className="p-8 max-w-full mx-auto space-y-6 animate-fade-in">
       {/* Page Title */}
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2.5 text-[var(--content-primary)]">
@@ -113,53 +113,48 @@ function InterviewPageContent() {
       {/* Input Form */}
       {!generating && !session && (
         <form onSubmit={handleGenerateQuestions} className="card p-6 space-y-5">
+          {/* Job Info Inputs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-                Target Job Title
-              </label>
-              <div className="relative">
-                <Briefcase size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
+              <label className="form-label font-medium">Target Job Title</label>
+              <div className="input-icon-wrap">
+                <Briefcase size={15} className="input-icon" />
                 <input
                   type="text"
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
-                  placeholder="e.g. Staff Backend Engineer"
+                  placeholder="Staff Backend Engineer"
                   required
-                  className="input-field pl-10 text-sm"
+                  className="input-field text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-                Target Company
-              </label>
-              <div className="relative">
-                <Building2 size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
+              <label className="form-label font-medium">Target Company</label>
+              <div className="input-icon-wrap">
+                <Building2 size={15} className="input-icon" />
                 <input
                   type="text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  placeholder="e.g. OpenAI"
+                  placeholder="OpenAI"
                   required
-                  className="input-field pl-10 text-sm"
+                  className="input-field text-sm"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-              Target Job Description
-            </label>
+            <label className="form-label font-medium">Target Job Description</label>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Paste full job description requirements and duties..."
               rows={8}
               required
-              className="input-field text-xs font-mono leading-relaxed"
+              className="textarea-field text-xs"
             />
           </div>
 

@@ -16,6 +16,7 @@ import {
   BarChart3,
   LogOut,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 
 const CORE_ITEMS = [
@@ -51,19 +52,19 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="w-60 h-screen flex flex-col shrink-0"
+      className="w-60 h-screen flex flex-col shrink-0 select-none"
       style={{
         background: "var(--surface-card)",
         borderRight: "1px solid var(--surface-border)",
       }}
     >
-      {/* Logo */}
+      {/* Brand Logo */}
       <div
         className="px-5 py-4 flex items-center gap-3 shrink-0"
         style={{ borderBottom: "1px solid var(--surface-border)" }}
       >
         <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-md"
           style={{ background: "var(--accent-primary)" }}
         >
           <Briefcase size={15} color="#fff" strokeWidth={2.5} />
@@ -72,52 +73,36 @@ export default function Sidebar() {
           <span className="text-sm font-bold tracking-tight block leading-none" style={{ color: "var(--content-primary)" }}>
             Landed
           </span>
-          <span className="text-[10px] font-mono" style={{ color: "var(--accent-primary)" }}>
+          <span className="text-[10px] font-mono flex items-center gap-1 mt-0.5" style={{ color: "var(--accent-primary)" }}>
+            <Sparkles size={9} />
             AI Job Copilot
           </span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-3 space-y-4 overflow-y-auto">
+      <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto">
         {/* Core Suite */}
         <div>
-          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-1.5" style={{ color: "var(--content-muted)" }}>
+          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-2 font-semibold text-[var(--content-muted)]">
             Core Suite
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             {CORE_ITEMS.map(({ href, label, icon: Icon }) => {
               const active = pathname.startsWith(href);
               return (
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
-                  style={
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${
                     active
-                      ? {
-                          background: "var(--accent-primary)",
-                          color: "#fff",
-                          boxShadow: "0 2px 10px rgba(16,185,129,0.3)",
-                        }
-                      : { color: "var(--content-secondary)" }
-                  }
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
-                      (e.currentTarget as HTMLElement).style.color = "var(--content-primary)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLElement).style.background = "";
-                      (e.currentTarget as HTMLElement).style.color = "var(--content-secondary)";
-                    }
-                  }}
+                      ? "bg-[var(--accent-primary)] text-white font-semibold shadow-sm"
+                      : "text-[var(--content-secondary)] hover:bg-[var(--surface-elevated)] hover:text-[var(--content-primary)]"
+                  }`}
                 >
-                  <Icon size={15} className="shrink-0" />
+                  <Icon size={15} className={`shrink-0 ${active ? "text-white" : "text-[var(--content-muted)]"}`} />
                   <span className="flex-1">{label}</span>
-                  {active && <ChevronRight size={13} className="opacity-70" />}
+                  {active && <ChevronRight size={13} className="opacity-80" />}
                 </Link>
               );
             })}
@@ -126,42 +111,25 @@ export default function Sidebar() {
 
         {/* AI Copilot Intelligence */}
         <div>
-          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-1.5" style={{ color: "var(--content-muted)" }}>
+          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-2 font-semibold text-[var(--content-muted)]">
             AI Intelligence
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             {ADVANCED_ITEMS.map(({ href, label, icon: Icon }) => {
               const active = pathname.startsWith(href);
               return (
                 <Link
                   key={href}
                   href={href}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
-                  style={
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${
                     active
-                      ? {
-                          background: "var(--accent-primary)",
-                          color: "#fff",
-                          boxShadow: "0 2px 10px rgba(16,185,129,0.3)",
-                        }
-                      : { color: "var(--content-secondary)" }
-                  }
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
-                      (e.currentTarget as HTMLElement).style.color = "var(--content-primary)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLElement).style.background = "";
-                      (e.currentTarget as HTMLElement).style.color = "var(--content-secondary)";
-                    }
-                  }}
+                      ? "bg-[var(--accent-primary)] text-white font-semibold shadow-sm"
+                      : "text-[var(--content-secondary)] hover:bg-[var(--surface-elevated)] hover:text-[var(--content-primary)]"
+                  }`}
                 >
-                  <Icon size={15} className="shrink-0" />
+                  <Icon size={15} className={`shrink-0 ${active ? "text-white" : "text-[var(--content-muted)]"}`} />
                   <span className="flex-1">{label}</span>
-                  {active && <ChevronRight size={13} className="opacity-70" />}
+                  {active && <ChevronRight size={13} className="opacity-80" />}
                 </Link>
               );
             })}
@@ -169,20 +137,11 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      {/* Bottom Divider + Logout */}
+      {/* Bottom Signout */}
       <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--surface-border)" }}>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
-          style={{ color: "var(--content-muted)" }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
-            (e.currentTarget as HTMLElement).style.color = "var(--status-rejected)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "";
-            (e.currentTarget as HTMLElement).style.color = "var(--content-muted)";
-          }}
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-[var(--content-muted)] hover:bg-[var(--surface-elevated)] hover:text-rose-400 transition-all duration-150"
         >
           <LogOut size={15} className="shrink-0" />
           <span>Sign out</span>
@@ -191,3 +150,4 @@ export default function Sidebar() {
     </aside>
   );
 }
+

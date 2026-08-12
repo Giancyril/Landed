@@ -92,31 +92,29 @@ export default function JobsHomePage() {
   }, []);
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8 animate-fade-in">
-      {/* Hero */}
-      <div className="space-y-1.5">
-        <h1 className="text-3xl font-bold tracking-tight" style={{ color: "var(--content-primary)" }}>
-          Your AI Job Search Copilot
-        </h1>
-        <p className="text-sm" style={{ color: "var(--content-secondary)" }}>
-          Search roles, tailor your resume, generate cover letters, and track every application — powered by Gemini AI.
+    <div className="p-8 max-w-full mx-auto space-y-8 animate-fade-in">
+      {/* Hero Header */}
+      <div className="page-header">
+        <h1>Your AI Job Search Copilot</h1>
+        <p>
+          Search active roles, tailor your resume with AI, generate personalized cover letters, and manage your pipeline.
         </p>
       </div>
 
       {/* Live Stats Bar */}
       {stats && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: "Total Tracked", value: stats.total, color: "var(--content-primary)" },
             { label: "Applied",       value: stats.applied, color: "var(--status-applied)" },
             { label: "Interviewing",  value: stats.interviewing, color: "var(--status-interviewing)" },
             { label: "Offers",        value: stats.offer, color: "var(--status-offer)" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="card p-4 space-y-1">
-              <div className="text-2xl font-bold font-mono" style={{ color }}>
+            <div key={label} className="stat-card">
+              <span className="stat-value" style={{ color }}>
                 {value}
-              </div>
-              <div className="text-xs" style={{ color: "var(--content-muted)" }}>{label}</div>
+              </span>
+              <span className="stat-label">{label}</span>
             </div>
           ))}
         </div>

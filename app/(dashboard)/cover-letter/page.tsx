@@ -80,7 +80,7 @@ function CoverLetterContent() {
   }
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-6 animate-fade-in">
+    <div className="p-8 max-w-full mx-auto space-y-6 animate-fade-in">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2.5 text-[var(--content-primary)]">
@@ -127,35 +127,31 @@ function CoverLetterContent() {
           {/* Job Info Inputs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-                2. Target Job Title
-              </label>
-              <div className="relative">
-                <Briefcase size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
+              <label className="form-label font-medium">Target Job Title</label>
+              <div className="input-icon-wrap">
+                <Briefcase size={15} className="input-icon" />
                 <input
                   type="text"
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
-                  placeholder="e.g. Senior Full Stack Developer"
+                  placeholder="Senior Full Stack Developer"
                   required
-                  className="input-field pl-10 text-sm"
+                  className="input-field text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-                Target Company
-              </label>
-              <div className="relative">
-                <Building2 size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--content-muted)]" />
+              <label className="form-label font-medium">Target Company</label>
+              <div className="input-icon-wrap">
+                <Building2 size={15} className="input-icon" />
                 <input
                   type="text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  placeholder="e.g. Acme Corp"
+                  placeholder="Acme Corp"
                   required
-                  className="input-field pl-10 text-sm"
+                  className="input-field text-sm"
                 />
               </div>
             </div>
@@ -163,7 +159,7 @@ function CoverLetterContent() {
 
           {/* Custom Candidate Instructions */}
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5 flex items-center gap-1.5">
+            <label className="form-label font-medium flex items-center gap-1.5">
               <MessageSquare size={13} className="text-[var(--accent-primary)]" />
               Custom Candidate Notes / Instructions (Optional)
             </label>
@@ -171,23 +167,21 @@ function CoverLetterContent() {
               type="text"
               value={customNotes}
               onChange={(e) => setCustomNotes(e.target.value)}
-              placeholder="e.g. 'Mention my open-source contribution to Next.js', 'Note that I am relocating to NYC in June'"
+              placeholder="Highlight open-source contributions or relocation preferences..."
               className="input-field text-xs"
             />
           </div>
 
           {/* Job Description Textarea */}
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-[var(--content-muted)] font-semibold mb-1.5">
-              3. Target Job Description
-            </label>
+            <label className="form-label font-medium">Target Job Description</label>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Paste full job description requirements and responsibilities here..."
               rows={7}
               required
-              className="input-field text-xs font-mono leading-relaxed"
+              className="textarea-field text-xs"
             />
           </div>
 

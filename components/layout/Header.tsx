@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ShieldCheck } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const BREADCRUMBS: Record<string, string> = {
   "/jobs": "Job Search & Openings",
@@ -42,16 +42,16 @@ export default function Header({ userEmail }: HeaderProps) {
       {/* User Badge & Security Tag */}
       <div className="flex items-center gap-4">
         <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-[var(--accent-primary)] bg-[var(--accent-subtle)] px-2.5 py-1 rounded-full border border-emerald-500/20">
-          <ShieldCheck size={13} />
-          <span>RLS Protected</span>
+          <Sparkles size={12} />
+          <span>Gemini 1.5 Pro AI</span>
         </div>
 
         {userEmail && (
-          <div className="flex items-center gap-2 pl-3 border-l border-[var(--surface-border)]">
-            <div className="w-7 h-7 rounded-full bg-[var(--surface-elevated)] border border-[var(--surface-border)] flex items-center justify-center font-mono font-bold text-xs text-[var(--accent-primary)]">
+          <div className="flex items-center gap-2.5 pl-3 border-l border-[var(--surface-border)]">
+            <div className="w-7 h-7 rounded-full bg-[var(--surface-elevated)] border border-[var(--surface-border)] flex items-center justify-center font-mono font-bold text-xs text-[var(--accent-primary)] shadow-inner">
               {userInitial}
             </div>
-            <span className="text-xs font-mono text-[var(--content-secondary)] hidden md:inline truncate max-w-[180px]">
+            <span className="text-xs font-medium text-[var(--content-secondary)] hidden md:inline truncate max-w-[180px]">
               {userEmail}
             </span>
           </div>

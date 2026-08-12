@@ -63,7 +63,7 @@ export default function ResumesPage() {
   }
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-6 animate-fade-in">
+    <div className="p-8 max-w-full mx-auto space-y-6 animate-fade-in">
       {/* Toast Alert */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-lg shadow-xl card text-xs font-semibold flex items-center gap-2 border-[var(--accent-primary)] text-[var(--accent-primary)] animate-fade-in">
