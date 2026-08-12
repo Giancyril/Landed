@@ -105,6 +105,9 @@ export default function SignupForm() {
         {/* Top Header Branding */}
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <Briefcase size={20} color="#fff" strokeWidth={2.5} />
+            </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-white block leading-none">
                 Landed
@@ -115,11 +118,18 @@ export default function SignupForm() {
             </div>
           </div>
 
-
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+            <ShieldCheck size={14} />
+            <span>256-bit Supabase RLS Protected</span>
+          </div>
         </div>
 
         {/* Hero Value Prop Content */}
         <div className="relative z-10 my-auto py-12 space-y-8 max-w-xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-emerald-300 font-mono">
+            <Sparkles size={14} className="text-emerald-400" />
+            Join Thousands of Job Seekers
+          </div>
 
           <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Build your <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">AI Career Engine</span> today.
@@ -172,7 +182,7 @@ export default function SignupForm() {
                   Full Name
                 </label>
                 <div className="relative">
-                  <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type="text"
                     value={fullName}
@@ -180,7 +190,7 @@ export default function SignupForm() {
                     placeholder="Jane Doe"
                     required
                     autoComplete="name"
-                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -191,15 +201,15 @@ export default function SignupForm() {
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@company.com"
+                    placeholder="you@example.com"
                     required
                     autoComplete="email"
-                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -210,7 +220,7 @@ export default function SignupForm() {
                   Password
                 </label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -218,7 +228,7 @@ export default function SignupForm() {
                     placeholder="At least 8 characters"
                     required
                     autoComplete="new-password"
-                    className="input-field pl-10 pr-11 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left input-with-icon-right text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                   <button
                     type="button"
@@ -237,15 +247,15 @@ export default function SignupForm() {
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Repeat password"
+                    placeholder="Repeat your password"
                     required
                     autoComplete="new-password"
-                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                 </div>
               </div>

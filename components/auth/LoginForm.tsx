@@ -17,6 +17,7 @@ import {
   Gauge,
   Wand2,
   CheckCircle2,
+  Zap,
 } from "lucide-react";
 
 export default function LoginForm() {
@@ -88,6 +89,9 @@ export default function LoginForm() {
         {/* Top Header Branding */}
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <Briefcase size={20} color="#fff" strokeWidth={2.5} />
+            </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-white block leading-none">
                 Landed
@@ -98,12 +102,18 @@ export default function LoginForm() {
             </div>
           </div>
 
-
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+            <ShieldCheck size={14} />
+            <span>256-bit Supabase RLS Protected</span>
+          </div>
         </div>
 
         {/* Hero Value Prop Content */}
         <div className="relative z-10 my-auto py-12 space-y-8 max-w-xl">
-
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-emerald-300 font-mono">
+            <Sparkles size={14} className="text-emerald-400" />
+            Powered by Google Gemini 1.5 Flash
+          </div>
 
           <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Accelerate your career search with <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">AI Precision</span>.
@@ -166,38 +176,33 @@ export default function LoginForm() {
               </p>
             </div>
 
-            {/* Quick Demo Credentials Button */}
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between text-xs">
-              <div className="space-y-0.5">
-                <span className="font-mono text-emerald-400 font-bold block">Quick Demo Account</span>
-                <span className="text-[11px] text-slate-300">Click to fill test credentials instantly</span>
-              </div>
-              <button
-                type="button"
-                onClick={handleFillDemo}
-                className="btn-primary text-[11px] py-1.5 px-3 rounded-lg font-mono flex items-center gap-1 shrink-0"
-              >
-                Auto-Fill Demo
-              </button>
-            </div>
-
             {/* Login Form */}
             <form onSubmit={handleLogin} className="space-y-5">
               {/* Email Input */}
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1.5">
-                  Email Address
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">
+                    Email Address
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleFillDemo}
+                    className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded"
+                  >
+                    <Zap size={11} />
+                    Auto-Fill Demo
+                  </button>
+                </div>
                 <div className="relative">
-                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@company.com"
+                    placeholder="you@example.com"
                     required
                     autoComplete="email"
-                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -210,15 +215,15 @@ export default function LoginForm() {
                   </label>
                 </div>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••••••"
+                    placeholder="Enter your password"
                     required
                     autoComplete="current-password"
-                    className="input-field pl-10 pr-11 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                    className="input-field input-with-icon-left input-with-icon-right text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
                   />
                   <button
                     type="button"
