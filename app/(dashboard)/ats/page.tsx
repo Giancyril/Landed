@@ -6,7 +6,8 @@ import { Resume, ATSAnalysis } from "@/types";
 import ATSGaugeCard from "@/components/ats/ATSGaugeCard";
 import ATSHeatmapTagCloud from "@/components/ats/ATSHeatmapTagCloud";
 import ATSRecommendationsCard from "@/components/ats/ATSRecommendationsCard";
-import { Gauge, Briefcase, Building2, Loader2, AlertCircle, Sparkles, RefreshCw } from "lucide-react";
+import ATSHistoryDrawer from "@/components/ats/ATSHistoryDrawer";
+import { Gauge, Briefcase, Building2, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 
 function ATSPageContent() {
   const searchParams = useSearchParams();
@@ -23,6 +24,7 @@ function ATSPageContent() {
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<ATSAnalysis | null>(null);
+  const [history, setHistory] = useState<ATSAnalysis[]>([]);
 
   useEffect(() => {
     async function loadResumes() {
@@ -41,7 +43,21 @@ function ATSPageContent() {
         setLoadingResumes(false);
       }
     }
+
+    async function loadHistory() {
+      try {
+        const res = await fetch("/api/resume/ats-score/history");
+        const data = await res.json();
+        if (res.ok && data.analyses) {
+          setHistory(data.analyses);
+        }
+      } catch (err) {
+        console.error("[loadHistory] Error:", err);
+      }
+    }
+
     loadResumes();
+    loadHistory();
   }, []);
 
   async function handleAnalyze(e: React.FormEvent) {
@@ -72,6 +88,7 @@ function ATSPageContent() {
       }
 
       setAnalysisResult(data.analysis);
+      setHistory((prev) => [data.analysis, ...prev]);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -91,6 +108,14 @@ function ATSPageContent() {
           Calculate your quantitative 0-100% ATS score, technical skill heatmap, and actionable bullet optimization tips.
         </p>
       </div>
+
+      {/* History Drawer */}
+      {history.length > 0 && !analyzing && (
+        <ATSHistoryDrawer
+          history={history}
+          onSelect={(selected) => setAnalysisResult(selected)}
+        />
+      )}
 
       {/* Input Form */}
       {!analyzing && !analysisResult && (
