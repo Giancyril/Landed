@@ -119,9 +119,6 @@ export default function SignupForm() {
         {/* Top Header Branding */}
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <Briefcase size={20} color="#fff" strokeWidth={2.5} />
-            </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-white block leading-none">
                 Landed

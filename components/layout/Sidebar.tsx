@@ -38,8 +38,13 @@ export default function Sidebar() {
   const router = useRouter();
 
   async function handleLogout() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    document.cookie = "landed_demo_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+    } catch {
+      // Ignore
+    }
     router.push("/login");
     router.refresh();
   }

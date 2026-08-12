@@ -17,7 +17,7 @@ export async function updateSession(request: NextRequest) {
   const isDemoSession = request.cookies.get("landed_demo_session")?.value === "true";
 
   // If Supabase URL is placeholder or user activated demo session
-  if (isPlaceholderUrl || isDemoSession) {
+  if (isPlaceholderUrl) {
     if (isDemoSession && isAuthPage) {
       const url = request.nextUrl.clone();
       url.pathname = "/jobs";
@@ -54,19 +54,19 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user && !isAuthPage && request.nextUrl.pathname !== "/") {
+    if (!user && !isDemoSession && !isAuthPage && request.nextUrl.pathname !== "/") {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       return NextResponse.redirect(url);
     }
 
-    if (user && isAuthPage) {
+    if ((user || isDemoSession) && isAuthPage) {
       const url = request.nextUrl.clone();
       url.pathname = "/jobs";
       return NextResponse.redirect(url);
     }
   } catch {
-    // Graceful fallback on network error
+    // Graceful fallback
   }
 
   return supabaseResponse;
