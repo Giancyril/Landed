@@ -259,6 +259,13 @@ body {
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--content-muted);
+  z-index: 10;
+}
+
+.input-icon-wrap input,
+.input-icon-wrap textarea,
+.input-icon-wrap select {
+  padding-left: 2.625rem !important;
 }
 
 /* ── Card Hover Lift ──────────────────────────────────────────────────────── */

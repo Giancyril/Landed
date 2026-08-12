@@ -151,12 +151,12 @@ export default function TrackerPage() {
 
         <div className="flex items-center gap-3">
           {/* View Toggle */}
-          <div className="flex items-center p-1 rounded-lg bg-[var(--surface-input)] border border-[var(--surface-border)]">
+          <div className="flex items-center p-1 rounded-xl bg-[var(--surface-input)] border border-[var(--surface-border)] shadow-inner">
             <button
               onClick={() => setViewMode("kanban")}
-              className={`px-3 py-1 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-150 ${
                 viewMode === "kanban"
-                  ? "bg-[var(--accent-primary)] text-white"
+                  ? "bg-[var(--accent-primary)] text-white shadow-sm"
                   : "text-[var(--content-muted)] hover:text-[var(--content-primary)]"
               }`}
             >
@@ -165,9 +165,9 @@ export default function TrackerPage() {
             </button>
             <button
               onClick={() => setViewMode("table")}
-              className={`px-3 py-1 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-150 ${
                 viewMode === "table"
-                  ? "bg-[var(--accent-primary)] text-white"
+                  ? "bg-[var(--accent-primary)] text-white shadow-sm"
                   : "text-[var(--content-muted)] hover:text-[var(--content-primary)]"
               }`}
             >
