@@ -10,16 +10,27 @@ import {
   Wand2,
   Mail,
   Kanban,
+  Gauge,
+  Mic,
+  DollarSign,
+  BarChart3,
   LogOut,
   ChevronRight,
 } from "lucide-react";
 
-const NAV_ITEMS = [
-  { href: "/jobs",         label: "Job Search",     icon: Search,   desc: "Browse live postings" },
-  { href: "/resumes",      label: "My Resumes",     icon: FileText, desc: "Upload & manage base resumes" },
-  { href: "/tailor",       label: "Tailor Resume",  icon: Wand2,    desc: "AI resume keyword matching" },
-  { href: "/cover-letter", label: "Cover Letter",   icon: Mail,     desc: "Generate human-tone letters" },
-  { href: "/tracker",      label: "Tracker",        icon: Kanban,   desc: "Kanban application board" },
+const CORE_ITEMS = [
+  { href: "/jobs",         label: "Job Search",     icon: Search },
+  { href: "/resumes",      label: "My Resumes",     icon: FileText },
+  { href: "/tailor",       label: "Tailor Resume",  icon: Wand2 },
+  { href: "/cover-letter", label: "Cover Letter",   icon: Mail },
+  { href: "/tracker",      label: "Tracker",        icon: Kanban },
+];
+
+const ADVANCED_ITEMS = [
+  { href: "/ats",       label: "ATS Analyzer",   icon: Gauge },
+  { href: "/interview", label: "Interview Prep", icon: Mic },
+  { href: "/negotiate", label: "Offer Advisor",  icon: DollarSign },
+  { href: "/analytics", label: "Analytics",      icon: BarChart3 },
 ];
 
 export default function Sidebar() {
@@ -43,7 +54,7 @@ export default function Sidebar() {
     >
       {/* Logo */}
       <div
-        className="px-5 py-5 flex items-center gap-3"
+        className="px-5 py-4 flex items-center gap-3 shrink-0"
         style={{ borderBottom: "1px solid var(--surface-border)" }}
       >
         <div
@@ -63,53 +74,101 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-2" style={{ color: "var(--content-muted)" }}>
-          Workspace
+      <nav className="flex-1 px-3 py-3 space-y-4 overflow-y-auto">
+        {/* Core Suite */}
+        <div>
+          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-1.5" style={{ color: "var(--content-muted)" }}>
+            Core Suite
+          </div>
+          <div className="space-y-0.5">
+            {CORE_ITEMS.map(({ href, label, icon: Icon }) => {
+              const active = pathname.startsWith(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
+                  style={
+                    active
+                      ? {
+                          background: "var(--accent-primary)",
+                          color: "#fff",
+                          boxShadow: "0 2px 10px rgba(16,185,129,0.3)",
+                        }
+                      : { color: "var(--content-secondary)" }
+                  }
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--content-primary)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.background = "";
+                      (e.currentTarget as HTMLElement).style.color = "var(--content-secondary)";
+                    }
+                  }}
+                >
+                  <Icon size={15} className="shrink-0" />
+                  <span className="flex-1">{label}</span>
+                  {active && <ChevronRight size={13} className="opacity-70" />}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {NAV_ITEMS.map(({ href, label, icon: Icon, desc }) => {
-          const active = pathname.startsWith(href);
-          return (
-            <Link
-              key={href}
-              href={href}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 group"
-              style={
-                active
-                  ? {
-                      background: "var(--accent-primary)",
-                      color: "#fff",
-                      boxShadow: "0 2px 10px rgba(16,185,129,0.3)",
+        {/* AI Copilot Intelligence */}
+        <div>
+          <div className="text-[10px] font-mono uppercase tracking-widest px-3 mb-1.5" style={{ color: "var(--content-muted)" }}>
+            AI Intelligence
+          </div>
+          <div className="space-y-0.5">
+            {ADVANCED_ITEMS.map(({ href, label, icon: Icon }) => {
+              const active = pathname.startsWith(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
+                  style={
+                    active
+                      ? {
+                          background: "var(--accent-primary)",
+                          color: "#fff",
+                          boxShadow: "0 2px 10px rgba(16,185,129,0.3)",
+                        }
+                      : { color: "var(--content-secondary)" }
+                  }
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--content-primary)";
                     }
-                  : { color: "var(--content-secondary)" }
-              }
-              onMouseEnter={(e) => {
-                if (!active) {
-                  (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
-                  (e.currentTarget as HTMLElement).style.color = "var(--content-primary)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!active) {
-                  (e.currentTarget as HTMLElement).style.background = "";
-                  (e.currentTarget as HTMLElement).style.color = "var(--content-secondary)";
-                }
-              }}
-            >
-              <Icon size={16} className="shrink-0" />
-              <span className="flex-1">{label}</span>
-              {active && <ChevronRight size={13} className="opacity-70" />}
-            </Link>
-          );
-        })}
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.background = "";
+                      (e.currentTarget as HTMLElement).style.color = "var(--content-secondary)";
+                    }
+                  }}
+                >
+                  <Icon size={15} className="shrink-0" />
+                  <span className="flex-1">{label}</span>
+                  {active && <ChevronRight size={13} className="opacity-70" />}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </nav>
 
       {/* Bottom Divider + Logout */}
-      <div className="px-3 pb-5 pt-3" style={{ borderTop: "1px solid var(--surface-border)" }}>
+      <div className="px-3 py-3 shrink-0" style={{ borderTop: "1px solid var(--surface-border)" }}>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200"
           style={{ color: "var(--content-muted)" }}
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLElement).style.background = "var(--surface-elevated)";
@@ -120,7 +179,7 @@ export default function Sidebar() {
             (e.currentTarget as HTMLElement).style.color = "var(--content-muted)";
           }}
         >
-          <LogOut size={16} className="shrink-0" />
+          <LogOut size={15} className="shrink-0" />
           <span>Sign out</span>
         </button>
       </div>

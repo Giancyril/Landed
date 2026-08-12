@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { User, Sparkles, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 const BREADCRUMBS: Record<string, string> = {
   "/jobs": "Job Search & Openings",
@@ -9,6 +9,10 @@ const BREADCRUMBS: Record<string, string> = {
   "/tailor": "AI Resume Tailoring Workspace",
   "/cover-letter": "AI Cover Letter Generator",
   "/tracker": "Kanban Application Tracker",
+  "/ats": "ATS Resume Match Analyzer",
+  "/interview": "AI Interview Prep Copilot",
+  "/negotiate": "Offer & Salary Negotiation Advisor",
+  "/analytics": "Career Pipeline & Velocity Analytics",
 };
 
 interface HeaderProps {
