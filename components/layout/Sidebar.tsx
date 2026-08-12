@@ -20,18 +20,18 @@ import {
 } from "lucide-react";
 
 const CORE_ITEMS = [
-  { href: "/jobs",         label: "Job Search",     icon: Search },
-  { href: "/resumes",      label: "My Resumes",     icon: FileText },
-  { href: "/tailor",       label: "Tailor Resume",  icon: Wand2 },
-  { href: "/cover-letter", label: "Cover Letter",   icon: Mail },
-  { href: "/tracker",      label: "Tracker",        icon: Kanban },
+  { href: "/jobs", label: "Job Search", icon: Search },
+  { href: "/resumes", label: "My Resumes", icon: FileText },
+  { href: "/tailor", label: "Tailor Resume", icon: Wand2 },
+  { href: "/cover-letter", label: "Cover Letter", icon: Mail },
+  { href: "/tracker", label: "Tracker", icon: Kanban },
 ];
 
 const ADVANCED_ITEMS = [
-  { href: "/ats",       label: "ATS Analyzer",   icon: Gauge },
+  { href: "/ats", label: "ATS Analyzer", icon: Gauge },
   { href: "/interview", label: "Interview Prep", icon: Mic },
-  { href: "/negotiate", label: "Offer Advisor",  icon: DollarSign },
-  { href: "/analytics", label: "Analytics",      icon: BarChart3 },
+  { href: "/negotiate", label: "Offer Advisor", icon: DollarSign },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 export default function Sidebar() {
@@ -60,7 +60,7 @@ export default function Sidebar() {
     >
       {/* Brand Logo */}
       <div
-        className="px-5 py-4 flex items-center gap-3 shrink-0"
+        className="h-14 px-5 flex items-center gap-3 shrink-0"
         style={{ borderBottom: "1px solid var(--surface-border)" }}
       >
         <div
@@ -74,7 +74,6 @@ export default function Sidebar() {
             Landed
           </span>
           <span className="text-[10px] font-mono flex items-center gap-1 mt-0.5" style={{ color: "var(--accent-primary)" }}>
-            <Sparkles size={9} />
             AI Job Copilot
           </span>
         </div>
@@ -94,11 +93,10 @@ export default function Sidebar() {
                 <Link
                   key={href}
                   href={href}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${
-                    active
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${active
                       ? "bg-[var(--accent-primary)] text-white font-semibold shadow-sm"
                       : "text-[var(--content-secondary)] hover:bg-[var(--surface-elevated)] hover:text-[var(--content-primary)]"
-                  }`}
+                    }`}
                 >
                   <Icon size={15} className={`shrink-0 ${active ? "text-white" : "text-[var(--content-muted)]"}`} />
                   <span className="flex-1">{label}</span>
@@ -121,11 +119,10 @@ export default function Sidebar() {
                 <Link
                   key={href}
                   href={href}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${
-                    active
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 relative ${active
                       ? "bg-[var(--accent-primary)] text-white font-semibold shadow-sm"
                       : "text-[var(--content-secondary)] hover:bg-[var(--surface-elevated)] hover:text-[var(--content-primary)]"
-                  }`}
+                    }`}
                 >
                   <Icon size={15} className={`shrink-0 ${active ? "text-white" : "text-[var(--content-muted)]"}`} />
                   <span className="flex-1">{label}</span>
