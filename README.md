@@ -1,40 +1,32 @@
 # Landed — AI Job Search Copilot
 
-A production-grade, full-stack AI-augmented job search platform. Features live job search via the Adzuna API, non-fabrication resume tailoring via Google Gemini, an anti-boilerplate cover letter generator, a Kanban application tracker, PDF/DOCX text extraction, and an executive dark-navy design system — all on Next.js 16 App Router with Supabase Auth and Row Level Security.
+A production-grade, full-stack AI-augmented job search platform. Features live job search via the Adzuna API, non-fabrication resume tailoring via Google Gemini, an anti-boilerplate cover letter generator, a Kanban application tracker, an ATS match analyzer & heatmap, an AI interview prep copilot, salary negotiation script advisor, multi-format exports (PDF, JSON Resume, MD), and real-time pipeline velocity analytics — all built on Next.js 16 App Router with Supabase Auth and Row Level Security.
 
-## Features
+## 🌟 Advanced AI Features
 
-### Core Functionality
-- **Live Job Search** — Real-time postings via the Adzuna REST API with keyword, location, country, and remote filters. Arbeitnow zero-config fallback for instant demo without API keys
-- **Smart Job Cards** — Company avatar initials, salary range, remote badges, direct external links, and 1-click "Track" and "Tailor Resume" actions
-- **Job Details Modal** — Full description viewer with formatted metadata and inline action buttons
+### 1. 📊 Interactive Resume ATS Score Analyzer & Heatmap Generator (`/ats`)
+- **Quantitative ATS Match Score (0–100%)** comparing base/tailored resumes against target job postings.
+- **Dimensional Breakdown Cards**: Score cards for *Keyword Density*, *Technical Stack Coverage*, *Formatting/Readability*, and *Experience Relevance*.
+- **Skill Gap Heatmap**: Color-coded matched vs missing skill tags with 1-click "Auto-Tailor Resume" integration.
 
-### AI Resume Pipeline (Google Gemini 1.5 Flash)
-- **Resume Upload & Parsing** — PDF text extraction via `pdf-parse` and DOCX extraction via `mammoth` with server-side text cleaning
-- **Non-Fabrication Resume Tailoring** — AI rewrites achievement bullets to match target job keywords without inventing credentials, job titles, companies, or dates
-- **Side-by-Side Diff Viewer** — Before/After column comparison of every bullet with AI reasoning, matched keyword badges, and missing keyword callouts
-- **Markdown Export** — Download tailored resume bullets as a `.md` file
+### 2. 🎙️ AI Interview Prep Copilot & Practice Workbench (`/interview`)
+- **Tailored Question Bank**: Generates role-specific questions across *Technical Deep Dives*, *Behavioral (STAR Method)*, and *Situational*.
+- **Interactive Practice Workbench**: Users submit answers to receive real-time Gemini AI scoring (0–100), key strengths, improvement gaps, and an exemplar model answer.
 
-### Cover Letter Generator
-- **Anti-Boilerplate Engine** — Strict system prompt banning generic AI clichés ("I am writing to express my enthusiastic interest...", "Thrilled to apply", etc.)
-- **Custom Candidate Notes** — Inject personal instructions (relocation details, specific projects to highlight, notice period)
-- **Interactive Inline Editor** — Live word/character counter, editable draft, copy to clipboard, `.txt` download
+### 3. 💰 Interactive Salary & Offer Negotiation Advisor (`/negotiate`)
+- **Offer Evaluator & Total Compensation Calculator**: Compare base pay, annual bonus %, equity grant, signing bonus, and remote stipends.
+- **AI Negotiation Email Generator**: Generates customized counter-offer emails with tone controls (*Collaborative*, *Firm & Competitive*, *Direct Executive*) and target counter-offer benchmarks.
 
-### Application Tracker
-- **6-Stage Kanban Board** — `Saved → Applied → Interviewing → Offer → Rejected → Withdrawn` columns
-- **Optimistic Status Updates** — Inline stage dropdown with instant client-side updates, server rollback on error
-- **Table List View** — Toggle between Kanban Board and searchable flat table view
-- **Application Notes** — Personal notes per application with modal editor
+### 4. 📄 Multi-Format Resume Export & Template Engine
+- **Multiple Executive Templates**: Modern Minimalist, Executive Emerald, and Tech Compact styling themes.
+- **Multi-Format Exports**: PDF export, HTML preview, Plain Text, and standard **JSON Resume** schema format.
 
-### Dashboard
-- **Live Stats Bar** — Real-time counts of tracked applications by pipeline stage
-- **Personalised Homepage** — Gradient feature cards with animated hover arrows
-- **Executive Design System** — Deep navy palette (`#0b1329`), emerald accent (`#10b981`), custom scrollbars, focus glow rings
+### 5. 📈 Career Analytics & Pipeline Insights Dashboard (`/analytics`)
+- **Visual Analytics Suite**: Application velocity, Response Rate %, Interview Conversion %, and Offer Conversion %.
+- **Pipeline Bottleneck Diagnostics**: AI insights comparing performance with vs. without resume tailoring.
+- **Data Export**: Download tracking and analytics history as CSV/JSON.
 
-### Security & Infrastructure
-- **Supabase Row Level Security** — Every table scoped to `auth.uid()` — zero cross-user data leakage
-- **Server-Side Auth Guards** — Dashboard layout enforces session check with `createClient()` before rendering
-- **Supabase Storage** — Resume PDF/DOCX binaries stored in the `resumes` bucket
+---
 
 ## Tech Stack
 
@@ -51,15 +43,24 @@ A production-grade, full-stack AI-augmented job search platform. Features live j
 | Icons | Lucide React |
 | Hosting | Vercel (recommended) |
 
+---
+
+## Database Schema Migrations
+
+```
+supabase/migrations/
+├── 20260811000000_initial_schema.sql       # Core profiles, resumes, saved_jobs, tailored_resumes, cover_letters, applications
+├── 20260811000001_triggers.sql             # Auto-updated_at triggers
+└── 20260812000000_advanced_features.sql    # ats_analyses, interview_sessions, interview_answers, offer_evaluations, negotiation_scripts
+```
+
+All tables enforce Supabase Row Level Security (`auth.uid() = user_id`).
+
+---
+
 ## Getting Started
 
-### Prerequisites
-- Node.js 20+
-- A [Supabase](https://supabase.com) project
-- A [Google Gemini](https://aistudio.google.com/app/apikey) API key
-- (Optional) An [Adzuna](https://developer.adzuna.com/) API key
-
-### 1. Clone the Repository
+### 1. Clone & Install
 
 ```bash
 git clone https://github.com/Giancyril/Landed.git
@@ -67,9 +68,9 @@ cd Landed
 npm install
 ```
 
-### 2. Configure Environment Variables
+### 2. Configure Environment
 
-Edit `.env` in the project root with your credentials:
+Edit `.env` in the project root:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
@@ -84,115 +85,17 @@ ADZUNA_APP_KEY="your-adzuna-app-key"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-> **Note:** Adzuna keys are optional. The app falls back to the free Arbeitnow API automatically when they are absent.
+### 3. Apply Migrations & Run
 
-### 3. Run the Database Migration
-
-In your Supabase project, navigate to **SQL Editor** and run the full migration file:
-
-```
-supabase/migrations/20260811000000_initial_schema.sql
-```
-
-This creates all tables (`profiles`, `resumes`, `tailored_resumes`, `cover_letters`, `applications`, `saved_jobs`), indexes, Row Level Security policies, and the auto-profile trigger.
-
-### 4. Create Supabase Storage Bucket
-
-In the Supabase dashboard → **Storage**:
-1. Create a bucket named `resumes`
-2. Set the bucket to **private**
-3. Add an RLS policy: `auth.uid()::text = (storage.foldername(name))[1]`
-
-### 5. Start Development Server
+In your Supabase SQL Editor, execute all SQL files from `supabase/migrations/`. Then start the dev server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to access the app.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Project Structure
-
-```
-├── app/
-│   ├── (auth)/               # Login & Signup pages
-│   │   ├── login/page.tsx
-│   │   └── signup/page.tsx
-│   ├── (dashboard)/          # Protected route group
-│   │   ├── layout.tsx        # Auth guard + Sidebar + Header
-│   │   ├── jobs/page.tsx     # Homepage + job search
-│   │   ├── resumes/page.tsx  # Resume manager
-│   │   ├── tailor/page.tsx   # AI tailoring workspace
-│   │   ├── cover-letter/     # Cover letter generator
-│   │   └── tracker/page.tsx  # Kanban tracker board
-│   └── api/
-│       ├── auth/callback/    # Supabase OAuth callback
-│       ├── jobs/search/      # GET job search (Adzuna)
-│       ├── resume/           # GET list, POST upload, DELETE, PATCH
-│       │   ├── upload/       # POST: PDF/DOCX parse + store
-│       │   ├── tailor/       # POST: Gemini non-fabrication tailor
-│       │   └── [id]/         # DELETE / PATCH single resume
-│       ├── cover-letter/generate/ # POST: Gemini cover letter
-│       └── applications/     # GET/POST + [id] PATCH/DELETE
-├── components/
-│   ├── auth/                 # LoginForm, SignupForm
-│   ├── cover-letter/         # CoverLetterEditor
-│   ├── jobs/                 # JobCard, JobFilters, JobDetailsModal
-│   ├── layout/               # Sidebar, Header
-│   ├── resumes/              # ResumeCard, ResumeUploadZone, ExtractedTextModal
-│   ├── tailoring/            # TailorDiffViewer, TailorProgressLoader
-│   ├── tracker/              # KanbanColumn, ApplicationCard, ApplicationModal
-│   └── ui/                   # EmptyState, SkeletonCard
-├── lib/
-│   ├── ai/                   # Gemini client + prompts
-│   ├── jobs/                 # Adzuna provider client
-│   ├── resume/               # PDF/DOCX parser
-│   └── supabase/             # Client, server, middleware
-├── supabase/migrations/      # Full Postgres schema + RLS
-└── types/index.ts            # Shared TypeScript types
-```
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/jobs/search` | Search job postings (Adzuna / Arbeitnow) |
-| `GET` | `/api/resume` | List user resumes |
-| `POST` | `/api/resume/upload` | Upload & parse PDF/DOCX resume |
-| `PATCH` | `/api/resume/[id]` | Set resume as primary |
-| `DELETE` | `/api/resume/[id]` | Delete resume record |
-| `POST` | `/api/resume/tailor` | Gemini AI resume tailoring |
-| `POST` | `/api/cover-letter/generate` | Gemini AI cover letter |
-| `GET` | `/api/applications` | List tracked applications |
-| `POST` | `/api/applications` | Track new application |
-| `PATCH` | `/api/applications/[id]` | Update status / notes |
-| `DELETE` | `/api/applications/[id]` | Remove tracked application |
-
-## Database Schema
-
-```sql
-profiles        -- Auto-created on signup via trigger
-resumes         -- PDF/DOCX files + extracted text
-tailored_resumes -- Gemini AI output (diff_json JSONB)
-cover_letters   -- Generated letter content
-applications    -- Kanban board (status ENUM)
-saved_jobs      -- Cached job postings from providers
-```
-
-All tables have RLS enabled and are scoped to `auth.uid()`.
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push to GitHub (already done)
-2. Import the repository at [vercel.com/new](https://vercel.com/new)
-3. Add all environment variables from `.env.example`
-4. Deploy — the Next.js App Router is fully supported with zero config
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first.
+---
 
 ## License
 
