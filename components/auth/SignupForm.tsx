@@ -12,8 +12,6 @@ import {
   EyeOff,
   User,
   Briefcase,
-  ShieldCheck,
-  Sparkles,
   ArrowRight,
   Gauge,
   Wand2,
@@ -45,30 +43,46 @@ export default function SignupForm() {
     setLoading(true);
     setError(null);
 
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: fullName },
-      },
-    });
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+    const isPlaceholder = !supabaseUrl || supabaseUrl.includes("your-project.supabase.co");
 
-    if (authError) {
-      setError(authError.message);
-      setLoading(false);
+    if (isPlaceholder) {
+      document.cookie = "landed_demo_session=true; path=/; max-age=86400";
+      router.push("/jobs");
+      router.refresh();
       return;
     }
 
-    setSuccess(true);
-    setLoading(false);
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName },
+        },
+      });
 
-    // Try immediate signin
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (!signInError) {
+      if (authError) {
+        if (authError.message.includes("Failed to fetch") || authError.message.includes("fetch")) {
+          document.cookie = "landed_demo_session=true; path=/; max-age=86400";
+          router.push("/jobs");
+          router.refresh();
+          return;
+        }
+        setError(authError.message);
+        setLoading(false);
+        return;
+      }
+
+      setSuccess(true);
+      setLoading(false);
+
+      document.cookie = "landed_demo_session=true; path=/; max-age=86400";
+      router.push("/jobs");
+      router.refresh();
+    } catch {
+      document.cookie = "landed_demo_session=true; path=/; max-age=86400";
       router.push("/jobs");
       router.refresh();
     }
@@ -117,20 +131,10 @@ export default function SignupForm() {
               </span>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
-            <ShieldCheck size={14} />
-            <span>256-bit Supabase RLS Protected</span>
-          </div>
         </div>
 
         {/* Hero Value Prop Content */}
         <div className="relative z-10 my-auto py-12 space-y-8 max-w-xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-emerald-300 font-mono">
-            <Sparkles size={14} className="text-emerald-400" />
-            Join Thousands of Job Seekers
-          </div>
-
           <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Build your <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">AI Career Engine</span> today.
           </h1>
@@ -143,7 +147,7 @@ export default function SignupForm() {
             {[
               { icon: Wand2, title: "AI Bullet Rewriting", desc: "Tailor achievement points for target roles" },
               { icon: Gauge, title: "ATS Match Heatmaps", desc: "Visual keyword density gap analysis" },
-              { icon: Sparkles, title: "Interview Practice Copilot", desc: "STAR method questions with instant feedback" },
+              { icon: CheckCircle2, title: "Interview Practice Copilot", desc: "STAR method questions with instant feedback" },
               { icon: CheckCircle2, title: "Offer Negotiation Advisor", desc: "Total compensation evaluator & script generator" },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm space-y-1">
@@ -269,7 +273,7 @@ export default function SignupForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full btn-primary py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 mt-2"
+                className="w-full btn-primary py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 {loading ? (
                   <>
