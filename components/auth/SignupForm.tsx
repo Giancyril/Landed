@@ -4,7 +4,21 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2, Mail, Lock, Eye, EyeOff, User, Briefcase } from "lucide-react";
+import {
+  Loader2,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  User,
+  Briefcase,
+  ShieldCheck,
+  Sparkles,
+  ArrowRight,
+  Gauge,
+  Wand2,
+  CheckCircle2,
+} from "lucide-react";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -46,12 +60,10 @@ export default function SignupForm() {
       return;
     }
 
-    // Supabase sends a confirmation email by default.
-    // If email confirmation is disabled in Supabase settings, redirect directly.
     setSuccess(true);
     setLoading(false);
 
-    // Try to sign in immediately (works if email confirmation is disabled)
+    // Try immediate signin
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -64,22 +76,17 @@ export default function SignupForm() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: "var(--surface-page)" }}>
-        <div className="w-full max-w-md text-center animate-fade-in">
-          <div
-            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: "var(--accent-subtle)", border: "2px solid var(--accent-primary)" }}
-          >
-            <Briefcase size={28} style={{ color: "var(--accent-primary)" }} />
+      <div className="min-h-screen w-full flex items-center justify-center p-6 bg-[#070c19]">
+        <div className="card p-10 max-w-md w-full text-center space-y-5 animate-fade-in border-[#1e293b]">
+          <div className="w-16 h-16 rounded-full bg-emerald-500/10 border-2 border-emerald-500 text-emerald-400 flex items-center justify-center mx-auto">
+            <CheckCircle2 size={32} />
           </div>
-          <h2 className="text-2xl font-bold mb-3" style={{ color: "var(--content-primary)" }}>
-            Account created!
-          </h2>
-          <p className="text-sm mb-6" style={{ color: "var(--content-secondary)" }}>
-            Check your email for a confirmation link to activate your account, then sign in.
+          <h2 className="text-2xl font-bold text-white">Account Created!</h2>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Your Landed account is active. Check your inbox for a confirmation link or sign in directly.
           </p>
-          <Link href="/login" className="btn-primary inline-block">
-            Go to Login
+          <Link href="/login" className="btn-primary w-full inline-block py-2.5 text-xs">
+            Proceed to Login
           </Link>
         </div>
       </div>
@@ -87,155 +94,194 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: "var(--surface-page)" }}>
-      <div className="w-full max-w-md animate-fade-in">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 justify-center mb-10">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center"
-            style={{ background: "var(--accent-primary)" }}
-          >
-            <Briefcase size={18} color="#fff" strokeWidth={2.5} />
+    <div className="min-h-screen w-full flex bg-[#070c19] text-[var(--content-primary)] font-sans antialiased overflow-hidden">
+      {/* LEFT PANEL: Executive Hero Branding Showcase */}
+      <div className="hidden lg:flex lg:w-7/12 relative flex-col justify-between p-12 bg-gradient-to-br from-[#0b1329] via-[#080e1f] to-[#040711] border-r border-[#1e293b]/60 overflow-hidden">
+        {/* Ambient Grid Lines & Radial Blur */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Top Header Branding */}
+        <div className="relative z-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div>
+              <span className="text-xl font-bold tracking-tight text-white block leading-none">
+                Landed
+              </span>
+              <span className="text-[11px] font-mono text-emerald-400">
+                AI Job Search Copilot
+              </span>
+            </div>
           </div>
-          <span className="text-xl font-bold tracking-tight" style={{ color: "var(--content-primary)" }}>
-            Landed
-          </span>
+
+
         </div>
 
-        <div className="card p-8">
-          <h1 className="text-2xl font-bold mb-1.5" style={{ color: "var(--content-primary)" }}>
-            Create your account
+        {/* Hero Value Prop Content */}
+        <div className="relative z-10 my-auto py-12 space-y-8 max-w-xl">
+
+          <h1 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Build your <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">AI Career Engine</span> today.
           </h1>
-          <p className="text-sm mb-8" style={{ color: "var(--content-secondary)" }}>
-            Start finding, tailoring, and tracking your dream job applications
+
+          <p className="text-sm text-slate-300 leading-relaxed">
+            Create your free account to upload base resumes, run ATS keyword matching, generate human cover letters, and organize your entire application pipeline in one executive workspace.
           </p>
 
-          <form onSubmit={handleSignup} className="space-y-5">
-            {/* Full Name */}
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1.5" style={{ color: "var(--content-secondary)" }}>
-                Full name
-              </label>
-              <div className="relative">
-                <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--content-muted)" }} />
-                <input
-                  id="name"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Jane Doe"
-                  required
-                  autoComplete="name"
-                  className="input-field pl-10"
-                />
+          <div className="grid grid-cols-2 gap-4 pt-2">
+            {[
+              { icon: Wand2, title: "AI Bullet Rewriting", desc: "Tailor achievement points for target roles" },
+              { icon: Gauge, title: "ATS Match Heatmaps", desc: "Visual keyword density gap analysis" },
+              { icon: Sparkles, title: "Interview Practice Copilot", desc: "STAR method questions with instant feedback" },
+              { icon: CheckCircle2, title: "Offer Negotiation Advisor", desc: "Total compensation evaluator & script generator" },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm space-y-1">
+                <Icon size={18} className="text-emerald-400 mb-1" />
+                <div className="text-xs font-bold text-white">{title}</div>
+                <div className="text-[11px] text-slate-400 leading-tight">{desc}</div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+          <span>Enterprise-grade executive career platform</span>
+          <span className="text-emerald-400 font-semibold">v2.5.0 Production Ready</span>
+        </div>
+      </div>
+
+      {/* RIGHT PANEL: Form */}
+      <div className="w-full lg:w-5/12 flex items-center justify-center p-6 sm:p-12 bg-[#070c19]">
+        <div className="w-full max-w-md space-y-8 animate-fade-in">
+          {/* Card Wrapper */}
+          <div className="card p-8 sm:p-10 border-[#1e293b] bg-[#0b1329]/90 backdrop-blur-xl shadow-2xl space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">
+                Create Free Account
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Get started with your AI-powered job search copilot
+              </p>
             </div>
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1.5" style={{ color: "var(--content-secondary)" }}>
-                Email address
-              </label>
-              <div className="relative">
-                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--content-muted)" }} />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  autoComplete="email"
-                  className="input-field pl-10"
-                />
+            <form onSubmit={handleSignup} className="space-y-4">
+              {/* Full Name */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <input
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Jane Doe"
+                    required
+                    autoComplete="name"
+                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-1.5" style={{ color: "var(--content-secondary)" }}>
-                Password
-              </label>
-              <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--content-muted)" }} />
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="At least 8 characters"
-                  required
-                  autoComplete="new-password"
-                  className="input-field pl-10 pr-11"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2"
-                  style={{ color: "var(--content-muted)" }}
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
+              {/* Email */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@company.com"
+                    required
+                    autoComplete="email"
+                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Confirm Password */}
-            <div>
-              <label htmlFor="confirm" className="block text-sm font-medium mb-1.5" style={{ color: "var(--content-secondary)" }}>
-                Confirm password
-              </label>
-              <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--content-muted)" }} />
-                <input
-                  id="confirm"
-                  type={showPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat your password"
-                  required
-                  autoComplete="new-password"
-                  className="input-field pl-10"
-                />
+              {/* Password */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="At least 8 characters"
+                    required
+                    autoComplete="new-password"
+                    className="input-field pl-10 pr-11 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Error */}
-            {error && (
-              <div
-                className="text-sm px-4 py-3 rounded-lg"
-                style={{
-                  background: "rgba(244,63,94,0.1)",
-                  border: "1px solid rgba(244,63,94,0.3)",
-                  color: "var(--status-rejected)",
-                }}
-              >
-                {error}
+              {/* Confirm Password */}
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Repeat password"
+                    required
+                    autoComplete="new-password"
+                    className="input-field pl-10 text-sm bg-[#070c19] border-[#1e293b] text-white focus:border-emerald-500"
+                  />
+                </div>
               </div>
-            )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full flex items-center justify-center gap-2 mt-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" />
-                  Creating account…
-                </>
-              ) : (
-                "Create account"
+              {error && (
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-400">
+                  {error}
+                </div>
               )}
-            </button>
-          </form>
 
-          <p className="text-sm text-center mt-6" style={{ color: "var(--content-muted)" }}>
-            Already have an account?{" "}
-            <Link href="/login" className="font-medium transition-colors" style={{ color: "var(--accent-primary)" }}>
-              Sign in
-            </Link>
-          </p>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-primary py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 mt-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Creating account...
+                  </>
+                ) : (
+                  <>
+                    Create Account
+                    <ArrowRight size={15} />
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="pt-3 border-t border-[#1e293b] text-center text-xs text-slate-400">
+              Already have an account?{" "}
+              <Link href="/login" className="font-semibold text-emerald-400 hover:underline">
+                Sign in
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
